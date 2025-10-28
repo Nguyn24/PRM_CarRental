@@ -1,0 +1,7 @@
+﻿services:
+  prm_project_assignment.apis:
+    image: prm_project_assignment.apis
+    build:
+      context: .
+      dockerfile: PRM_Project_Assignment.Apis/Dockerfile
+

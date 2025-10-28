@@ -1,0 +1,7 @@
+@PRM_Project_Assignment.Apis_HostAddress = http://localhost:5099
+@PRM_Project_Assignment = variable value
+
+GET {{PRM_Project_Assignment.Apis_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
