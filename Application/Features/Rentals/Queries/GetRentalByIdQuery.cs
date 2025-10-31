@@ -3,7 +3,7 @@ using Domain.Common;
 
 namespace Application.Features.Rentals.Queries;
 
-public sealed record GetRentalByIdQuery(Guid RentalId) : IQuery<Result<RentalDto>>;
+public sealed record GetRentalByIdQuery(Guid RentalId) : IQuery<RentalDto>;
 
 public sealed record RentalDto(
     Guid Id,

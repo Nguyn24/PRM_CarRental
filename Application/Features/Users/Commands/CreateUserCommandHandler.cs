@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Users.Commands;
 
-public sealed class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Result<CreateUserResponse>>
+public sealed class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, CreateUserResponse>
 {
     private readonly IDbContext _dbContext;
     private readonly IPasswordHasher _passwordHasher;
@@ -25,14 +25,14 @@ public sealed class CreateUserCommandHandler : ICommandHandler<CreateUserCommand
 
         if (userExists)
             return Result.Failure<CreateUserResponse>(
-                new Error("User.EmailExists", "User with this email already exists"));
+                Error.Conflict("User.EmailExists", "User with this email already exists"));
 
         var user = new User
         {
             Id = Guid.NewGuid(),
             FullName = request.FullName,
             Email = request.Email,
-            PasswordHash = _passwordHasher.HashPassword(request.Password),
+            PasswordHash = _passwordHasher.Hash(request.Password),
             Role = request.Role,
             Status = UserStatus.Active,
             CreatedAt = DateTime.UtcNow,

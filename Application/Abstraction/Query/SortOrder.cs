@@ -4,4 +4,6 @@ public enum SortOrder
 {
     Ascending,
     Descending,
+    Asc = Ascending,
+    Desc = Descending,
 }

@@ -8,5 +8,5 @@ public sealed record GetAllUsersQuery(
     int PageNumber = 1,
     int PageSize = 10,
     string? SortBy = "fullName",
-    SortOrder SortOrder = SortOrder.Asc) 
-    : IQuery<Result<Page<UserDto>>>, IPageableQuery, ISortableQuery;
+    SortOrder? SortOrder = Application.Abstraction.Query.SortOrder.Asc) 
+    : IQuery<Page<UserDto>>, IPageableQuery, ISortableQuery;

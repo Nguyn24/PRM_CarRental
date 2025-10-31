@@ -7,7 +7,7 @@ namespace Application.Features.Payments.Commands;
 public sealed record RecordPaymentCommand(
     Guid RentalId,
     decimal Amount,
-    PaymentMethod PaymentMethod) : ICommand<Result<CreatePaymentResponse>>;
+    PaymentMethod PaymentMethod) : ICommand<CreatePaymentResponse>;
 
 public sealed record CreatePaymentResponse(
     Guid Id,

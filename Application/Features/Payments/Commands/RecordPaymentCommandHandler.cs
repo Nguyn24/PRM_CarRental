@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Payments.Commands;
 
-public sealed class RecordPaymentCommandHandler : ICommandHandler<RecordPaymentCommand, Result<CreatePaymentResponse>>
+public sealed class RecordPaymentCommandHandler : ICommandHandler<RecordPaymentCommand, CreatePaymentResponse>
 {
     private readonly IDbContext _dbContext;
 
@@ -22,11 +22,11 @@ public sealed class RecordPaymentCommandHandler : ICommandHandler<RecordPaymentC
 
         if (rental is null)
             return Result.Failure<CreatePaymentResponse>(
-                new Error("Rental.NotFound", "Rental not found"));
+                Error.NotFound("Rental.NotFound", "Rental not found"));
 
         if (request.Amount <= 0)
             return Result.Failure<CreatePaymentResponse>(
-                new Error("Payment.InvalidAmount", "Payment amount must be greater than 0"));
+                Error.Validation("Payment.InvalidAmount", "Payment amount must be greater than 0"));
 
         var payment = new Payment
         {

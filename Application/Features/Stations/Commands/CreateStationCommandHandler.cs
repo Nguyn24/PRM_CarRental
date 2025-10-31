@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Stations.Commands;
 
-public sealed class CreateStationCommandHandler : ICommandHandler<CreateStationCommand, Result<CreateStationResponse>>
+public sealed class CreateStationCommandHandler : ICommandHandler<CreateStationCommand, CreateStationResponse>
 {
     private readonly IDbContext _dbContext;
 
@@ -22,7 +22,7 @@ public sealed class CreateStationCommandHandler : ICommandHandler<CreateStationC
 
         if (stationExists)
             return Result.Failure<CreateStationResponse>(
-                new Error("Station.NameExists", "Station with this name already exists"));
+                Error.Conflict("Station.NameExists", "Station with this name already exists"));
 
         var station = new Station
         {

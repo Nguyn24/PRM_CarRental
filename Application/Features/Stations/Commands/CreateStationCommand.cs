@@ -7,7 +7,7 @@ public sealed record CreateStationCommand(
     string Name,
     string Address,
     decimal Latitude,
-    decimal Longitude) : ICommand<Result<CreateStationResponse>>;
+    decimal Longitude) : ICommand<CreateStationResponse>;
 
 public sealed record CreateStationResponse(
     Guid Id,

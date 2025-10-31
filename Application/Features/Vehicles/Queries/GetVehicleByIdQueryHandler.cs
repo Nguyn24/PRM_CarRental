@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Vehicles.Queries;
 
-public sealed class GetVehicleByIdQueryHandler : IQueryHandler<GetVehicleByIdQuery, Result<VehicleDto>>
+public sealed class GetVehicleByIdQueryHandler : IQueryHandler<GetVehicleByIdQuery, VehicleDto>
 {
     private readonly IDbContext _dbContext;
 
@@ -22,7 +22,7 @@ public sealed class GetVehicleByIdQueryHandler : IQueryHandler<GetVehicleByIdQue
 
         if (vehicle is null)
             return Result.Failure<VehicleDto>(
-                new Error("Vehicle.NotFound", $"Vehicle with ID {request.VehicleId} not found"));
+                Error.NotFound("Vehicle.NotFound", $"Vehicle with ID {request.VehicleId} not found"));
 
         var vehicleDto = new VehicleDto(
             vehicle.Id,

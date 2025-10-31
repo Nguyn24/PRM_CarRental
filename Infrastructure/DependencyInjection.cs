@@ -35,7 +35,8 @@ public static class DependencyInjection
 
     private static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHealthChecks().AddSqlServer(configuration.GetConnectionString("Default")!);
+        var cs = configuration.GetConnectionString("Database") ?? configuration.GetConnectionString("Default");
+        services.AddHealthChecks().AddSqlServer(cs!);
         return services;
     }
     

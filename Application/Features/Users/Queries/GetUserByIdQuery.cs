@@ -3,7 +3,7 @@ using Domain.Common;
 
 namespace Application.Features.Users.Queries;
 
-public sealed record GetUserByIdQuery(Guid UserId) : IQuery<Result<UserDto>>;
+public sealed record GetUserByIdQuery(Guid UserId) : IQuery<UserDto>;
 
 public sealed record UserDto(
     Guid Id,

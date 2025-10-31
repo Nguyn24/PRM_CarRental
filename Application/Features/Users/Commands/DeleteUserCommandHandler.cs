@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Users.Commands;
 
-public sealed class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand, Result<bool>>
+public sealed class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand, bool>
 {
     private readonly IDbContext _dbContext;
 
@@ -22,7 +22,7 @@ public sealed class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand
 
         if (user is null)
             return Result.Failure<bool>(
-                new Error("User.NotFound", $"User with ID {request.UserId} not found"));
+                Error.NotFound("User.NotFound", $"User with ID {request.UserId} not found"));
 
         user.Status = UserStatus.Inactive;
         await _dbContext.SaveChangesAsync(cancellationToken);

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Vehicles.Commands;
 
-public sealed class AddVehicleCommandHandler : ICommandHandler<AddVehicleCommand, Result<CreateVehicleResponse>>
+public sealed class AddVehicleCommandHandler : ICommandHandler<AddVehicleCommand, CreateVehicleResponse>
 {
     private readonly IDbContext _dbContext;
 
@@ -22,14 +22,14 @@ public sealed class AddVehicleCommandHandler : ICommandHandler<AddVehicleCommand
 
         if (!stationExists)
             return Result.Failure<CreateVehicleResponse>(
-                new Error("Station.NotFound", $"Station with ID {request.StationId} not found"));
+                Error.NotFound("Station.NotFound", $"Station with ID {request.StationId} not found"));
 
         var plateExists = await _dbContext.Vehicles
             .AnyAsync(v => v.PlateNumber == request.PlateNumber, cancellationToken);
 
         if (plateExists)
             return Result.Failure<CreateVehicleResponse>(
-                new Error("Vehicle.PlateExists", "Vehicle with this plate number already exists"));
+                Error.Conflict("Vehicle.PlateExists", "Vehicle with this plate number already exists"));
 
         var vehicle = new Vehicle
         {

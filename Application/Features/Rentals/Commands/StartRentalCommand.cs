@@ -7,7 +7,7 @@ public sealed record StartRentalCommand(
     Guid VehicleId,
     Guid RenterId,
     Guid StationId,
-    Guid StaffId) : ICommand<Result<StartRentalResponse>>;
+    Guid StaffId) : ICommand<StartRentalResponse>;
 
 public sealed record StartRentalResponse(
     Guid RentalId,

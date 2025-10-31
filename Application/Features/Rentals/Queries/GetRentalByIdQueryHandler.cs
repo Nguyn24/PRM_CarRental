@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Rentals.Queries;
 
-public sealed class GetRentalByIdQueryHandler : IQueryHandler<GetRentalByIdQuery, Result<RentalDto>>
+public sealed class GetRentalByIdQueryHandler : IQueryHandler<GetRentalByIdQuery, RentalDto>
 {
     private readonly IDbContext _dbContext;
 
@@ -25,7 +25,7 @@ public sealed class GetRentalByIdQueryHandler : IQueryHandler<GetRentalByIdQuery
 
         if (rental is null)
             return Result.Failure<RentalDto>(
-                new Error("Rental.NotFound", $"Rental with ID {request.RentalId} not found"));
+                Error.NotFound("Rental.NotFound", $"Rental with ID {request.RentalId} not found"));
 
         var rentalDto = new RentalDto(
             rental.Id,

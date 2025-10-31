@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Users.Queries;
 
-public sealed class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Result<Page<UserDto>>>
+public sealed class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Page<UserDto>>
 {
     private readonly IDbContext _dbContext;
 

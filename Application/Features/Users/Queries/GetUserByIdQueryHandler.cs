@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Users.Queries;
 
-public sealed class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, Result<UserDto>>
+public sealed class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserDto>
 {
     private readonly IDbContext _dbContext;
 
@@ -21,7 +21,7 @@ public sealed class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, Re
 
         if (user is null)
             return Result.Failure<UserDto>(
-                new Error("User.NotFound", $"User with ID {request.UserId} not found"));
+                Error.NotFound("User.NotFound", $"User with ID {request.UserId} not found"));
 
         var userDto = new UserDto(
             user.Id,

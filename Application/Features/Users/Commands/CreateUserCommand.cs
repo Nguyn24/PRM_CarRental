@@ -10,7 +10,7 @@ public sealed record CreateUserCommand(
     string Password,
     UserRole Role,
     string? DriverLicenseNumber = null,
-    string? IDCardNumber = null) : ICommand<Result<CreateUserResponse>>;
+    string? IDCardNumber = null) : ICommand<CreateUserResponse>;
 
 public sealed record CreateUserResponse(
     Guid Id,

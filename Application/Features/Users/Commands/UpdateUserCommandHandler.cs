@@ -1,11 +1,12 @@
 using Application.Abstraction.Data;
 using Application.Abstraction.Messaging;
 using Domain.Common;
+using Application.Features.Users.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Users.Commands;
 
-public sealed class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, Result<UserDto>>
+public sealed class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, UserDto>
 {
     private readonly IDbContext _dbContext;
 
@@ -21,7 +22,7 @@ public sealed class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand
 
         if (user is null)
             return Result.Failure<UserDto>(
-                new Error("User.NotFound", $"User with ID {request.UserId} not found"));
+                Error.NotFound("User.NotFound", $"User with ID {request.UserId} not found"));
 
         if (!string.IsNullOrWhiteSpace(request.FullName))
             user.FullName = request.FullName;

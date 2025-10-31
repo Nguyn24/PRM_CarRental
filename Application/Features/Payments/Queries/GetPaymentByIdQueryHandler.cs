@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Payments.Queries;
 
-public sealed class GetPaymentByIdQueryHandler : IQueryHandler<GetPaymentByIdQuery, Result<PaymentDto>>
+public sealed class GetPaymentByIdQueryHandler : IQueryHandler<GetPaymentByIdQuery, PaymentDto>
 {
     private readonly IDbContext _dbContext;
 
@@ -21,7 +21,7 @@ public sealed class GetPaymentByIdQueryHandler : IQueryHandler<GetPaymentByIdQue
 
         if (payment is null)
             return Result.Failure<PaymentDto>(
-                new Error("Payment.NotFound", $"Payment with ID {request.PaymentId} not found"));
+                Error.NotFound("Payment.NotFound", $"Payment with ID {request.PaymentId} not found"));
 
         var paymentDto = new PaymentDto(
             payment.Id,

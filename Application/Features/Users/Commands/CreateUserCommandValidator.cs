@@ -16,7 +16,8 @@ public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCom
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password is required")
-            .MinimumLength(8).WithMessage("Password must be at least 8 characters");
+            .Must(p => !string.IsNullOrWhiteSpace(p))
+            .WithMessage("Password must not be whitespace only");
 
         RuleFor(x => x.Role)
             .IsInEnum().WithMessage("Invalid role");
