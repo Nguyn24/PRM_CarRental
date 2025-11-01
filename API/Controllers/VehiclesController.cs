@@ -39,4 +39,30 @@ public class VehiclesController(ISender sender) : ControllerBase
         var result = await sender.Send(query, ct);
         return result.MatchOk();
     }
+
+    public sealed record UpdateBatteryRequest(int BatteryLevel);
+
+    [HttpPatch("{id:guid}/battery")]
+    public async Task<IResult> UpdateBattery(
+        [FromRoute] Guid id,
+        [FromBody] UpdateBatteryRequest request,
+        CancellationToken ct)
+    {
+        var command = new UpdateVehicleBatteryCommand(id, request.BatteryLevel);
+        var result = await sender.Send(command, ct);
+        return result.MatchOk();
+    }
+
+    public sealed record ChangeStatusRequest(Domain.Vehicles.VehicleStatus Status);
+
+    [HttpPatch("{id:guid}/status")]
+    public async Task<IResult> ChangeStatus(
+        [FromRoute] Guid id,
+        [FromBody] ChangeStatusRequest request,
+        CancellationToken ct)
+    {
+        var command = new ChangeVehicleStatusCommand(id, request.Status);
+        var result = await sender.Send(command, ct);
+        return result.MatchOk();
+    }
 }

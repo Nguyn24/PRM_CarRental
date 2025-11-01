@@ -36,6 +36,9 @@ public sealed class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand
         if (!string.IsNullOrWhiteSpace(request.IDCardNumber))
             user.IDCardNumber = request.IDCardNumber;
 
+        if (request.IsVerified.HasValue)
+            user.IsVerified = request.IsVerified.Value;
+
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success(new UserDto(
