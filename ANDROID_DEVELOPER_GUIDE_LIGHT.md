@@ -1,6 +1,6 @@
-# PRM Car Rental - Hướng Dẫn Phát Triển Android (Phiên Bản Rút Gọn)
+# PRM Car Rental - Hướng Dẫn Phát Triển Android
 
-> **Timeline**: 5 ngày | **Team**: 3 developers | **Luồng Core**: `[Đăng ký → Đặt xe → Nhận xe → Trả xe → Thanh toán]`
+>**Luồng Core**: `[Đăng ký → Đặt xe → Nhận xe → Trả xe → Thanh toán]`
 
 ---
 
