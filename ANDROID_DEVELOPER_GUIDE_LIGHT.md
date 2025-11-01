@@ -26,7 +26,7 @@
 ## 🔧 Technical Specifications
 
 ### Base URL
-- **Development**: `http://localhost:5000/api`
+- **Development**: `http://localhost:5099/api`
 - **Production**: `https://api.prm-carrental.com/api`
 
 ### Authentication
