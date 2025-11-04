@@ -8,10 +8,12 @@ public sealed record AddVehicleCommand(
     string PlateNumber,
     VehicleType Type,
     Guid StationId,
-    int BatteryLevel = 100) : ICommand<CreateVehicleResponse>;
+    int BatteryLevel = 100,
+    string? ImageUrl = null) : ICommand<CreateVehicleResponse>;
 
 public sealed record CreateVehicleResponse(
     Guid Id,
     string PlateNumber,
     VehicleType Type,
-    string Status);
+    string Status,
+    string? ImageUrl);

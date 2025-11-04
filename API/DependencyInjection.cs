@@ -1,4 +1,5 @@
 using API.Infrastructure;
+using API.Services;
 
 namespace API;
 
@@ -10,6 +11,8 @@ public static class DependencyInjection
         services.AddSwaggerGen();
 
         services.AddControllers();
+
+        services.AddScoped<IVehicleImageStorage, VehicleImageStorage>();
 
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();

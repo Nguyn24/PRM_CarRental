@@ -38,7 +38,8 @@ public sealed class AddVehicleCommandHandler : ICommandHandler<AddVehicleCommand
             Type = request.Type,
             StationId = request.StationId,
             BatteryLevel = request.BatteryLevel,
-            Status = VehicleStatus.Available
+            Status = VehicleStatus.Available,
+            ImageUrl = request.ImageUrl
         };
 
         _dbContext.Vehicles.Add(vehicle);
@@ -48,6 +49,7 @@ public sealed class AddVehicleCommandHandler : ICommandHandler<AddVehicleCommand
             vehicle.Id,
             vehicle.PlateNumber,
             vehicle.Type,
-            vehicle.Status.ToString()));
+            vehicle.Status.ToString(),
+            vehicle.ImageUrl));
     }
 }

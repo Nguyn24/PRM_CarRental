@@ -56,6 +56,7 @@ public sealed class GetAllVehiclesQueryHandler : IQueryHandler<GetAllVehiclesQue
                 v.PlateNumber,
                 v.Type,
                 v.Status.ToString(),
+                v.ImageUrl,
                 v.BatteryLevel,
                 v.StationId,
                 v.Station.Name,
@@ -66,4 +67,3 @@ public sealed class GetAllVehiclesQueryHandler : IQueryHandler<GetAllVehiclesQue
         return Result.Success(page);
     }
 }
-

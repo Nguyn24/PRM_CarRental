@@ -11,6 +11,7 @@ public sealed record VehicleDto(
     string PlateNumber,
     VehicleType Type,
     string Status,
+    string? ImageUrl,
     int BatteryLevel,
     Guid StationId,
     string StationName,

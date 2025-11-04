@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251028180915_Init")]
-    partial class Init
+    [Migration("20251104124240_AddVehicleImageUrl")]
+    partial class AddVehicleImageUrl
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -219,6 +219,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("BatteryLevel")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("PlateNumber")
                         .IsRequired()

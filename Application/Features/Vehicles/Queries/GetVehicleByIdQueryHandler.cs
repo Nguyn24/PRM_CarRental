@@ -29,6 +29,7 @@ public sealed class GetVehicleByIdQueryHandler : IQueryHandler<GetVehicleByIdQue
             vehicle.PlateNumber,
             vehicle.Type,
             vehicle.Status.ToString(),
+            vehicle.ImageUrl,
             vehicle.BatteryLevel,
             vehicle.StationId,
             vehicle.Station.Name,

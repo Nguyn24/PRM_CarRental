@@ -217,6 +217,10 @@ namespace Infrastructure.Migrations
                     b.Property<int>("BatteryLevel")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
                     b.Property<string>("PlateNumber")
                         .IsRequired()
                         .HasMaxLength(50)

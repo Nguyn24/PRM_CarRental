@@ -10,6 +10,7 @@ public class Vehicle
     public VehicleType Type { get; set; }
     public int BatteryLevel { get; set; }
     public VehicleStatus Status { get; set; }
+    public string? ImageUrl { get; set; }
 
     public Station Station { get; set; } = null!;
     public ICollection<VehicleHistory> History { get; set; } = new List<VehicleHistory>();
