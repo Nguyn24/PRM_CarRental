@@ -55,7 +55,7 @@ public class VehiclesController(ISender sender, IVehicleImageStorage imageStorag
             return Results.Created(location, ApiResult<CreateVehicleResponse>.Success(response));
         }
 
-        return result.MatchCreated(x => Url.RouteUrl("GetVehicleById", new { id = x.Id })!);
+        return CustomResults.Problem(result);
     }
 
     [HttpGet("{id:guid}", Name = "GetVehicleById")]
@@ -106,6 +106,46 @@ public class VehiclesController(ISender sender, IVehicleImageStorage imageStorag
             }
 
             return Results.Ok(ApiResult<Page<VehicleDto>>.Success(page));
+        }
+
+        return CustomResults.Problem(result);
+    }
+
+    public sealed record UpdateBatteryRequest(int BatteryLevel);
+
+    [HttpPatch("{id:guid}/battery")]
+    public async Task<IResult> UpdateBattery(
+        [FromRoute] Guid id,
+        [FromBody] UpdateBatteryRequest request,
+        CancellationToken ct)
+    {
+        var command = new UpdateVehicleBatteryCommand(id, request.BatteryLevel);
+        var result = await sender.Send(command, ct);
+
+        if (result.IsSuccess)
+        {
+            var dto = WithAbsoluteImageUrl(result.Value);
+            return Results.Ok(ApiResult<VehicleDto>.Success(dto));
+        }
+
+        return CustomResults.Problem(result);
+    }
+
+    public sealed record ChangeStatusRequest(Domain.Vehicles.VehicleStatus Status);
+
+    [HttpPatch("{id:guid}/status")]
+    public async Task<IResult> ChangeStatus(
+        [FromRoute] Guid id,
+        [FromBody] ChangeStatusRequest request,
+        CancellationToken ct)
+    {
+        var command = new ChangeVehicleStatusCommand(id, request.Status);
+        var result = await sender.Send(command, ct);
+
+        if (result.IsSuccess)
+        {
+            var dto = WithAbsoluteImageUrl(result.Value);
+            return Results.Ok(ApiResult<VehicleDto>.Success(dto));
         }
 
         return CustomResults.Problem(result);

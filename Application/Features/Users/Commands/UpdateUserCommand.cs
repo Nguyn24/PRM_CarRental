@@ -9,4 +9,5 @@ public sealed record UpdateUserCommand(
     string? FullName = null,
     string? AvatarUrl = null,
     string? DriverLicenseNumber = null,
-    string? IDCardNumber = null) : ICommand<UserDto>;
+    string? IDCardNumber = null,
+    bool? IsVerified = null) : ICommand<UserDto>;
