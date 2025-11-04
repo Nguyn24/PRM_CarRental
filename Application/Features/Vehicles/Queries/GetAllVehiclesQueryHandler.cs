@@ -63,7 +63,7 @@ public sealed class GetAllVehiclesQueryHandler : IQueryHandler<GetAllVehiclesQue
                 DateTime.UtcNow))
             .ToListAsync(cancellationToken);
 
-        var page = new Page<VehicleDto>(items, request.PageNumber, request.PageSize, totalCount);
+        var page = new Page<VehicleDto>(items, totalCount, request.PageNumber, request.PageSize);
         return Result.Success(page);
     }
 }

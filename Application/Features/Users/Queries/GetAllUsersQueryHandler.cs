@@ -50,9 +50,9 @@ public sealed class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Pa
 
         var page = new Page<UserDto>(
             users,
+            totalCount,
             request.PageNumber,
-            request.PageSize,
-            totalCount);
+            request.PageSize);
 
         return Result.Success(page);
     }

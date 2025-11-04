@@ -44,8 +44,7 @@ public sealed class GetAllStationsQueryHandler : IQueryHandler<GetAllStationsQue
                 s.Vehicles.Count(v => v.Status == VehicleStatus.Available)))
             .ToListAsync(cancellationToken);
 
-        var page = new Page<StationDto>(items, request.PageNumber, request.PageSize, totalCount);
+        var page = new Page<StationDto>(items, totalCount, request.PageNumber, request.PageSize);
         return Result.Success(page);
     }
 }
-
