@@ -15,6 +15,17 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public class VehiclesController(ISender sender, IVehicleImageStorage imageStorage) : ControllerBase
 {
+    public sealed record VehicleResponse(
+        Guid Id,
+        string PlateNumber,
+        string Type,
+        string Status,
+        string? ImageUrl,
+        int BatteryLevel,
+        Guid StationId,
+        string StationName,
+        DateTime CreatedAt);
+
     public sealed class CreateVehicleRequest
     {
         public string PlateNumber { get; set; } = null!;
@@ -66,7 +77,8 @@ public class VehiclesController(ISender sender, IVehicleImageStorage imageStorag
         if (result.IsSuccess)
         {
             var dto = WithAbsoluteImageUrl(result.Value);
-            return Results.Ok(ApiResult<VehicleDto>.Success(dto));
+            var response = ToResponse(dto);
+            return Results.Ok(ApiResult<VehicleResponse>.Success(response));
         }
 
         return CustomResults.Problem(result);
@@ -88,24 +100,18 @@ public class VehiclesController(ISender sender, IVehicleImageStorage imageStorag
         if (result.IsSuccess)
         {
             var page = result.Value;
-            if (page.Items is IList<VehicleDto> list)
-            {
-                for (var i = 0; i < list.Count; i++)
-                {
-                    list[i] = WithAbsoluteImageUrl(list[i]);
-                }
-            }
-            else
-            {
-                var rewritten = page.Items.Select(WithAbsoluteImageUrl).ToList();
-                page.Items.Clear();
-                foreach (var item in rewritten)
-                {
-                    page.Items.Add(item);
-                }
-            }
+            // Ensure absolute ImageUrl first
+            var absoluteDtos = page.Items.Select(WithAbsoluteImageUrl).ToList();
+            // Convert enums to strings
+            var responseItems = absoluteDtos.Select(ToResponse).ToList();
 
-            return Results.Ok(ApiResult<Page<VehicleDto>>.Success(page));
+            var responsePage = new Page<VehicleResponse>(responseItems, page.TotalCount)
+            {
+                PageNumber = page.PageNumber,
+                TotalPages = page.TotalPages
+            };
+
+            return Results.Ok(ApiResult<Page<VehicleResponse>>.Success(responsePage));
         }
 
         return CustomResults.Problem(result);
@@ -125,7 +131,8 @@ public class VehiclesController(ISender sender, IVehicleImageStorage imageStorag
         if (result.IsSuccess)
         {
             var dto = WithAbsoluteImageUrl(result.Value);
-            return Results.Ok(ApiResult<VehicleDto>.Success(dto));
+            var response = ToResponse(dto);
+            return Results.Ok(ApiResult<VehicleResponse>.Success(response));
         }
 
         return CustomResults.Problem(result);
@@ -145,7 +152,8 @@ public class VehiclesController(ISender sender, IVehicleImageStorage imageStorag
         if (result.IsSuccess)
         {
             var dto = WithAbsoluteImageUrl(result.Value);
-            return Results.Ok(ApiResult<VehicleDto>.Success(dto));
+            var response = ToResponse(dto);
+            return Results.Ok(ApiResult<VehicleResponse>.Success(response));
         }
 
         return CustomResults.Problem(result);
@@ -163,4 +171,16 @@ public class VehiclesController(ISender sender, IVehicleImageStorage imageStorag
 
     private VehicleDto WithAbsoluteImageUrl(VehicleDto dto)
         => dto with { ImageUrl = BuildAbsoluteUrl(dto.ImageUrl) };
+
+    private VehicleResponse ToResponse(VehicleDto dto)
+        => new(
+            dto.Id,
+            dto.PlateNumber,
+            dto.Type.ToString(),
+            dto.Status,
+            dto.ImageUrl,
+            dto.BatteryLevel,
+            dto.StationId,
+            dto.StationName,
+            dto.CreatedAt);
 }
