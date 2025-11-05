@@ -45,10 +45,13 @@ public sealed class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand
             user.Id,
             user.FullName,
             user.Email,
+            user.PasswordHash,
             user.Role.ToString(),
             user.Status.ToString(),
             user.CreatedAt,
             user.IsVerified,
-            user.AvatarUrl));
+            user.AvatarUrl,
+            user.DriverLicenseNumber,
+            user.IDCardNumber));
     }
 }

@@ -41,11 +41,14 @@ public sealed class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Pa
                 u.Id,
                 u.FullName,
                 u.Email,
+                u.PasswordHash,
                 u.Role.ToString(),
                 u.Status.ToString(),
                 u.CreatedAt,
                 u.IsVerified,
-                u.AvatarUrl))
+                u.AvatarUrl,
+                u.DriverLicenseNumber,
+                u.IDCardNumber))
             .ToListAsync(cancellationToken);
 
         var page = new Page<UserDto>(

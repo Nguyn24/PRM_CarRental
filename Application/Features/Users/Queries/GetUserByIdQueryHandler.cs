@@ -27,11 +27,14 @@ public sealed class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, Us
             user.Id,
             user.FullName,
             user.Email,
+            user.PasswordHash,
             user.Role.ToString(),
             user.Status.ToString(),
             user.CreatedAt,
             user.IsVerified,
-            user.AvatarUrl);
+            user.AvatarUrl,
+            user.DriverLicenseNumber,
+            user.IDCardNumber);
 
         return Result.Success(userDto);
     }

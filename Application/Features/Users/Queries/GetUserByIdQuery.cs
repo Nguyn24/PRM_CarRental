@@ -9,8 +9,11 @@ public sealed record UserDto(
     Guid Id,
     string FullName,
     string Email,
+    string PasswordHash,
     string Role,
     string Status,
     DateTime CreatedAt,
     bool IsVerified,
-    string? AvatarUrl);
+    string? AvatarUrl,
+    string? DriverLicenseNumber,
+    string? IDCardNumber);
