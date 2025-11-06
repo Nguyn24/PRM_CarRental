@@ -25,6 +25,7 @@ public sealed class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand
                 Error.NotFound("User.NotFound", $"User with ID {request.UserId} not found"));
 
         user.Status = UserStatus.Inactive;
+        user.IsDeleted = true;
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return Result.Success(true);

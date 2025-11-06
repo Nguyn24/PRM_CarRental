@@ -46,4 +46,25 @@ public class StationsController(ISender sender) : ControllerBase
         var result = await sender.Send(new GetVehiclesByStationQuery(id, pageNumber, pageSize), ct);
         return result.MatchOk();
     }
+
+    public sealed record UpdateStationRequest(
+        string? Name,
+        string? Address,
+        decimal? Latitude,
+        decimal? Longitude);
+
+    [HttpPut("{id:guid}")]
+    public async Task<IResult> Update([FromRoute] Guid id, [FromBody] UpdateStationRequest body, CancellationToken ct)
+    {
+        var command = new UpdateStationCommand(id, body.Name, body.Address, body.Latitude, body.Longitude);
+        var result = await sender.Send(command, ct);
+        return result.MatchOk();
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IResult> Delete([FromRoute] Guid id, CancellationToken ct)
+    {
+        var result = await sender.Send(new DeleteStationCommand(id), ct);
+        return result.MatchOk();
+    }
 }

@@ -48,5 +48,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 		builder.Property(x => x.IsVerified).IsRequired().HasDefaultValue(false);
 
 		builder.Property(x => x.AvatarUrl).HasMaxLength(1000);
+
+		builder.Property(x => x.IsDeleted)
+			.IsRequired()
+			.HasDefaultValue(false);
 	}
 }

@@ -25,6 +25,10 @@ public class StationConfiguration : IEntityTypeConfiguration<Station>
         builder.Property(x => x.Longitude)
             .HasPrecision(10, 6)
             .IsRequired();
+
+		builder.Property(x => x.IsDeleted)
+			.IsRequired()
+			.HasDefaultValue(false);
     }
 }
 

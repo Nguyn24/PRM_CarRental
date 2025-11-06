@@ -34,6 +34,10 @@ public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
         builder.Property(x => x.ImageUrl)
             .HasMaxLength(1000);
 
+		builder.Property(x => x.IsDeleted)
+			.IsRequired()
+			.HasDefaultValue(false);
+
         builder.HasOne(x => x.Station)
             .WithMany(s => s.Vehicles)
             .HasForeignKey(x => x.StationId);

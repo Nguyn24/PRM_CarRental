@@ -17,10 +17,20 @@ public sealed class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Pa
 
     public async Task<Result<Page<UserDto>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
-        var query = _dbContext.Users.AsQueryable();
+        var query = _dbContext.Users
+            .Where(u => !u.IsDeleted)
+            .AsQueryable();
+
+        if (request.Role.HasValue)
+        {
+            query = query.Where(u => u.Role == request.Role.Value);
+        }
 
         query = request.SortBy?.ToLower() switch
         {
+            "role" => request.SortOrder == SortOrder.Asc
+                ? query.OrderBy(u => u.Role)
+                : query.OrderByDescending(u => u.Role),
             "email" => request.SortOrder == SortOrder.Asc
                 ? query.OrderBy(u => u.Email)
                 : query.OrderByDescending(u => u.Email),

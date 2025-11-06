@@ -183,4 +183,16 @@ public class VehiclesController(ISender sender, IVehicleImageStorage imageStorag
             dto.StationId,
             dto.StationName,
             dto.CreatedAt);
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IResult> Delete([FromRoute] Guid id, CancellationToken ct)
+    {
+        var result = await sender.Send(new DeleteVehicleCommand(id), ct);
+        if (result.IsSuccess)
+        {
+            return Results.Ok(ApiResult<bool>.Success(true));
+        }
+
+        return CustomResults.Problem(result);
+    }
 }

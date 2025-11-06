@@ -7,6 +7,7 @@ public class Station
     public string Address { get; set; } = null!;
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
+    public bool IsDeleted { get; set; }
 
     public ICollection<Vehicles.Vehicle> Vehicles { get; set; } = new List<Vehicles.Vehicle>();
 }

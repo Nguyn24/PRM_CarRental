@@ -2,6 +2,7 @@ using Application.Features.Users.Commands;
 using Application.Features.Users.Queries;
 using Application.Abstraction.Query;
 using API.Extensions;
+using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,9 +32,10 @@ public class UsersController(ISender sender) : ControllerBase
         [FromQuery] int pageSize = 10,
         [FromQuery] string? sortBy = "fullName",
         [FromQuery] SortOrder? sortOrder = SortOrder.Asc,
+        [FromQuery] UserRole? role = null,
         CancellationToken ct = default)
     {
-        var query = new GetAllUsersQuery(pageNumber, pageSize, sortBy, sortOrder);
+        var query = new GetAllUsersQuery(pageNumber, pageSize, sortBy, sortOrder, role);
         var result = await sender.Send(query, ct);
         return result.MatchOk();
     }
@@ -65,4 +67,3 @@ public class UsersController(ISender sender) : ControllerBase
         return result.MatchOk();
     }
 }
-

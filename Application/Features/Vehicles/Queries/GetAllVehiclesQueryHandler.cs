@@ -18,7 +18,10 @@ public sealed class GetAllVehiclesQueryHandler : IQueryHandler<GetAllVehiclesQue
 
     public async Task<Result<Page<VehicleDto>>> Handle(GetAllVehiclesQuery request, CancellationToken cancellationToken)
     {
-        var query = _dbContext.Vehicles.Include(v => v.Station).AsQueryable();
+        var query = _dbContext.Vehicles
+            .Where(v => !v.IsDeleted)
+            .Include(v => v.Station)
+            .AsQueryable();
 
         if (request.Status.HasValue)
         {

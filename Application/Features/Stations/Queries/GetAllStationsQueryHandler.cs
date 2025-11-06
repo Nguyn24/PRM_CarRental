@@ -18,7 +18,10 @@ public sealed class GetAllStationsQueryHandler : IQueryHandler<GetAllStationsQue
 
     public async Task<Result<Page<StationDto>>> Handle(GetAllStationsQuery request, CancellationToken cancellationToken)
     {
-        var query = _dbContext.Stations.Include(s => s.Vehicles).AsQueryable();
+        var query = _dbContext.Stations
+            .Where(s => !s.IsDeleted)
+            .Include(s => s.Vehicles)
+            .AsQueryable();
 
         query = request.SortBy?.ToLower() switch
         {

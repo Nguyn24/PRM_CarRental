@@ -11,6 +11,7 @@ public class Vehicle
     public int BatteryLevel { get; set; }
     public VehicleStatus Status { get; set; }
     public string? ImageUrl { get; set; }
+    public bool IsDeleted { get; set; }
 
     public Station Station { get; set; } = null!;
     public ICollection<VehicleHistory> History { get; set; } = new List<VehicleHistory>();

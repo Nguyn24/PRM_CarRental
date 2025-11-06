@@ -16,6 +16,7 @@ public class User : Entity
     public UserStatus Status { get; set; }
     public bool IsVerified { get; set; }
     public string? AvatarUrl { get; set; }
+    public bool IsDeleted { get; set; }
 
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     
