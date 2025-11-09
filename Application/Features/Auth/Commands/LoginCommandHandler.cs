@@ -57,6 +57,7 @@ public sealed class LoginCommandHandler : ICommandHandler<LoginCommand, AuthResp
             user.Role.ToString(),
             accessToken,
             refreshToken,
+            user.DriverLicenseNumber,
             DateTime.UtcNow.AddMinutes(60));
 
         return Result.Success(response);

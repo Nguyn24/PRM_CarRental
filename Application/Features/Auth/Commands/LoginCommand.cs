@@ -12,5 +12,6 @@ public sealed record AuthResponse(
     string Role,
     string AccessToken,
     string RefreshToken,
+    string driverLicenseNumber,
     DateTime ExpiresAt);
 
